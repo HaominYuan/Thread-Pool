@@ -6,7 +6,7 @@
 #define T SQueue_T
 
 typedef struct node_t {
-	int           value;
+	void*         value;
 	struct node_t *next;
 } node_t;
 
@@ -40,9 +40,8 @@ void squeue_destroy(T *self) {
 	*self = NULL;
 }
 
-void squeue_enqueue(T self, int value) {
+void squeue_enqueue(T self, void *value) {
 	node_t *tmp = malloc(sizeof(node_t));
-	assert(tmp != NULL);
 	tmp->value = value;
 	tmp->next = NULL;
 
@@ -52,7 +51,7 @@ void squeue_enqueue(T self, int value) {
 	pthread_mutex_unlock(&self->tailLock);
 }
 
-int squeue_dequeue(T self, int *value) {
+int squeue_dequeue(T self, void **value) {
 	pthread_mutex_lock(&self->headLock);	
 	node_t *tmp = self->head;
 	node_t *newHead = tmp->next;
