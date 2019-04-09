@@ -1,5 +1,8 @@
-INCS = ./
+INCS = ./include
 CFLAGS = -Wall
 
-run : main.c squeue.c zem.c tpool.c
+run : main.c $(INCS)/*.c
 	gcc $^ -o $@ -I $(INCS) $(CFLAGS)
+
+clean :
+	rm run
